@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>贝叶斯定理在拼写检查中的 - 山河故人</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="知其不可为而为之,阮一峰的博客Google的研发总监Peter Norvig源码在搜索引擎的应用中,拼写检查起着重要的作用：
+数学原理： 贝叶斯定理
+贝叶斯定理由英国数学家贝叶斯 ( Thomas Bayes 170,"> 
+    <meta name="author" content="冰川"> 
+    <link rel="alternative" href="atom.xml" title="山河故人" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+</html>
+<body class="loading">
+    <span id="config-title" style="display:none">山河故人</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">贝叶斯定理在拼写检查中的</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title">贝叶斯定理在拼写检查中的</h1>
+        <div class="stuff">
+            <span>六月 25, 1998</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p><a href="http://www.ruanyifeng.com/home.html" target="_blank" rel="noopener">阮一峰的博客</a><br><a href="http://norvig.com/spell-correct.html" target="_blank" rel="noopener">Google的研发总监Peter Norvig源码</a><br>在搜索引擎的应用中,拼写检查起着重要的作用：<img src="http://img.blog.csdn.net/20171118224200706?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VueWljaHVhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="样例图片"></p>
+<h2 id="数学原理：-贝叶斯定理"><a href="#数学原理：-贝叶斯定理" class="headerlink" title="数学原理： 贝叶斯定理"></a>数学原理： 贝叶斯定理</h2><hr>
+<p>贝叶斯定理由英国数学家贝叶斯 ( Thomas Bayes 1702-1761 ) 发展，用来描述两个条件概率之间的关系。<br>所谓”拼写检查”，就是在发生输入错误B的情况下，试图推断出A。从概率论的角度看，就是已知输入错误B，然后在若干个备选方案中，找出可能性最大的那个输入正确A，也就是求下面这个式子的最大值。<br><em>（比如lates应该被更正为late或者latest？），我们用概率决定把哪一个作为建议。我们从跟原始词相关的所有可能的正确拼写中找到可能性最大的那个拼写建议。</em><br><img src="http://img.blog.csdn.net/20171118230047276?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VueWljaHVhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="贝叶斯定理"></p>
+<blockquote>
+<p>事件A：要猜测输入正确事件的概率<br>事件B：现实已发生输入错误事件的概率</p>
+</blockquote>
+<p>对于每一个A来说，输入错误B的概率相同，所以最大值可转换为</p>
+<blockquote>
+<p>P(B|A)*P(A)</p>
+</blockquote>
+<p>其中</p>
+<blockquote>
+<p>P（A|B）是在拼写错误的情况下推断出拼写正确的情况</p>
+<p>P(A)的含义是某个正确的词的出现”概率”，它可以用”频率”代替。如果我们有一个足够大的文本库，那么这个文本库中每个单词的出现频率，就相当于它的发生概率。某个词的出现频率越高，P(A）就越大。</p>
+</blockquote>
+<blockquote>
+<p>P(B|A)的含义是，在试图拼写正确A的情况下，出现拼写错误B的概率。这需要统计数据的支持，但是为了简化问题，我们假设两个单词在组成上越接近，就有越可能拼错，P(B|A)就越大。举例来说，相差一个字母的拼法，就比相差两个字母的拼法，发生概率更高。你想拼写单词hello，那么错误拼成hallo（相差一个字母）的可能性，就比拼成haallo高（相差两个字母）。</p>
+</blockquote>
+<p>因此</p>
+<blockquote>
+<p>我们只要找到与输入单词在组成上最相近的那些词，再在其中挑出出现频率最高的一个，就能实现 P(B|A) * P(A) 的最大值。</p>
+</blockquote>
+<p>正因贝叶斯公式可用于事件发生概率的推测，因此它广泛应用于计算机领域如：垃圾邮件的过滤，中文分词，机器翻译，拼写检查等等。</p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><ol>
+<li>建立一个足够大的文本库。读取一个包含了一百万个单词的很大的文本文件<a href="http://norvig.com/big.txt" target="_blank" rel="noopener">big.txt</a>。这个文件由Project Gutenberg中几个公共领域的书串联而成。 </li>
+<li>取出文本库的每一个单词，统计它们的出现频率。</li>
+<li>根据用户输入的单词，得到其所有可能的拼写相近的形式。<pre><code>*所谓&quot;拼写相近&quot;，指的是两个单词之间的&quot;编辑距离&quot;（edit distance）不超过2。也就是说，两个词只相差1到2个字母，只通过----删除、交换、更改和插入----这四种操作中的一种，就可以让一个词变成另一个词。*
+</code></pre></li>
+<li>比较所有拼写相近的词在文本库的出现频率。频率最高的那个词，就是正确的拼法。</li>
+</ol>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p> 1、 加载Python的正则语言模块（re）和<a href="https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001411031239400f7181f65f33a4623bc42276a605debf6000" target="_blank" rel="noopener">collections模块</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import re, collections</span><br></pre></td></tr></table></figure></p>
+<p>2、 定义words()函数，用来取出文本库的每一个词。<br><a href="http://blog.csdn.net/wenyichuan/article/details/78532442" target="_blank" rel="noopener">正则表达式</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def words(text):</span><br><span class="line">    return re.findall(&apos;[a-z]+&apos;, text.lower())#将文本中的单词分离开 返回一个列表</span><br></pre></td></tr></table></figure>
+<p>lower()将所有词都转成小写，避免因为大小写不同，而被算作两个词，所以“the”和“The”一样定义为同一个单词。<br>3、定义一个train()函数，用来建立一个”字典”结构。文本库的每一个词，都是这个”字典”的键；它们所对应的值，就是这个词在文本库的出现频率。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def train(features):</span><br><span class="line">    model = collections.defaultdict(lambda: 1)</span><br><span class="line">    for f in features:</span><br><span class="line">        model[f] += 1</span><br><span class="line">    return model</span><br></pre></td></tr></table></figure>
+<p>如果有一个单词在我们训练的数据中没有出现怎么办？最简单的方法是把这些单词看作出现了一次。这个处理叫做<strong><em>平滑处理</em></strong>，因为我们将那些概率分布可能为0的地方平滑化，将他们设置为最小的概率值1，以后每出现一次，频率就增加1。 这个类像一个所有键的值都默认为1的Python的字典（在C语言中，叫做哈希表）。<br><a href="http://www.jb51.net/article/88147.htm" target="_blank" rel="noopener">collections.defaultdict</a><br>4、使用words()和train()函数，生成上一步的”词频字典”，放入变量NWORDS。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NWORDS = train(words(open(&apos;big.txt&apos;).read()))</span><br></pre></td></tr></table></figure>
+<p>5、定义edits1()函数，用来生成所有与输入参数word的”编辑距离”为1的词。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">alphabet = &apos;abcdefghijklmnopqrstuvwxyz&apos;#字母表</span><br><span class="line">def edits1(word):</span><br><span class="line">   splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]</span><br><span class="line">   deletes = [a + b[1:] for a, b in splits if b]</span><br><span class="line">   transposes = [a + b[1] + b[0] + b[2:] for a, b in splits if len(b)&gt;1]</span><br><span class="line">   replaces = [a + c + b[1:] for a, b in splits for c in alphabet if b]</span><br><span class="line">   inserts = [a + c + b for a, b in splits for c in alphabet]</span><br><span class="line">   return set(deletes + transposes + replaces + inserts)</span><br></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def edits1(word):</span><br><span class="line">    n = len(word)</span><br><span class="line">    return set([word[0:i]+word[i+1:] for i in range(n)] +                     # deletion</span><br><span class="line">               [word[0:i]+word[i+1]+word[i]+word[i+2:] for i in range(n-1)] + # transposition</span><br><span class="line">               [word[0:i]+c+word[i+1:] for i in range(n) for c in alphabet] + # replaces</span><br><span class="line">               [word[0:i]+c+word[i:] for i in range(n+1) for c in alphabet])  # insertion</span><br></pre></td></tr></table></figure>
+<p>edit1()函数中的几个变量的含义如下：</p>
+<blockquote>
+<figure class="highlight plain"><figcaption><span>[('', 'abc'), ('a',</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; &apos;bc&apos;), (&apos;ab&apos;, &apos;c&apos;), (&apos;abc&apos;, &apos;&apos;)] 。</span><br><span class="line">&gt;   （2）deletes：依次删除word的每一位后、所形成的所有新词。比如，&apos;abc&apos;对应的deletes就是 [&apos;bc&apos;, &apos;ac&apos;,</span><br><span class="line">&gt; &apos;ab&apos;] 。 　　</span><br><span class="line">&gt;  （3）transposes：依次交换word的邻近两位，所形成的所有新词。比如，&apos;abc&apos;对应的transposes就是</span><br><span class="line">&gt; [&apos;bac&apos;, &apos;acb&apos;] 。</span><br><span class="line">&gt;  （4）replaces：将word的每一位依次替换成其他25个字母，所形成的所有新词。比如，&apos;abc&apos;对应的replaces就是</span><br><span class="line">&gt; [&apos;abc&apos;, &apos;bbc&apos;, &apos;cbc&apos;, ... , &apos;abx&apos;, &apos; aby&apos;, &apos;abz&apos; ] ，一共包含78个词（26 × 3）。</span><br><span class="line">&gt; （5）inserts：在word的邻近两位之间依次插入一个字母，所形成的所有新词。比如，&apos;abc&apos;</span><br><span class="line">&gt; 对应的inserts就是[&apos;aabc&apos;, &apos;babc&apos;, &apos;cabc&apos;, ..., &apos;abcx&apos;, &apos;abcy&apos;,</span><br><span class="line">&gt; &apos;abcz&apos;]，一共包含104个词（26 × 4）。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>最后，edit1()返回deletes、transposes、replaces、inserts的合集，这就是与word”编辑距离”等于1的所有词。对于一个长度为n的单词，将会有n种删除，n-1种交换，26<em>n种修改，26</em>（n+1）种插入。会返回54n+25个词。<br>6、定义edit2()函数，用来生成所有与word的”编辑距离”为2的词语。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def edits2(word):</span><br><span class="line">　　　　return set(e2 for e1 in edits1(word) for e2 in edits1(e1))</span><br></pre></td></tr></table></figure>
+<p>但是这样的话，会返回一个 (54n+25) * (54n+25) 的数组，实在是太大了。因此，我们将edit2()改为known_edits2()函数，将返回的词限定为在文本库中出现过的词。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def known_edits2(word):</span><br><span class="line">    return set(e2 for e1 in edits1(word) for e2 in edits1(e1) if e2 in NWORDS)</span><br></pre></td></tr></table></figure>
+<p>7、定义correct()函数，用来从所有备选的词中，选出用户最可能想要拼写的词。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def known(words):</span><br><span class="line">    return set(w for w in words if w in NWORDS)</span><br><span class="line">def correct(word):</span><br><span class="line">    candidates = known([word]) or known(edits1(word)) or known_edits2(word) or [word]</span><br><span class="line">    return max(candidates, key=NWORDS.get)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>max(iterable, key, default) 求迭代器的最大值，其中iterable 为迭代器，max会for i in … 遍历一遍这个迭代器，然后将迭代器的每一个返回值当做参数传给key=func 中的func(一般用lambda表达式定义) ，然后将func的执行结果传给key，然后以key为标准进行大小的判断。</p>
+</blockquote>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import re, collections</span><br><span class="line">def words(text):return re.findall(&apos;[a-z]+&apos;, text.lower())#将文本中的单词分离开 返回一个列表</span><br><span class="line">def train(features):</span><br><span class="line">    model = collections.defaultdict(lambda: 1)</span><br><span class="line">    for f in features:</span><br><span class="line">        model[f] += 1</span><br><span class="line">    return model</span><br><span class="line">NWORDS = train(words(open(&apos;big.txt&apos;).read()))</span><br><span class="line">alphabet = &apos;abcdefghijklmnopqrstuvwxyz&apos;</span><br><span class="line">def edits1(word):</span><br><span class="line">   splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]</span><br><span class="line">   deletes = [a + b[1:] for a, b in splits if b]</span><br><span class="line">   transposes = [a + b[1] + b[0] + b[2:] for a, b in splits if len(b)&gt;1]</span><br><span class="line">   replaces = [a + c + b[1:] for a, b in splits for c in alphabet if b]</span><br><span class="line">   inserts = [a + c + b for a, b in splits for c in alphabet]</span><br><span class="line">   return set(deletes + transposes + replaces + inserts)</span><br><span class="line">def known_edits2(word):return set(e2 for e1 in edits1(word) for e2 in edits1(e1) if e2 in NWORDS)</span><br><span class="line">def known(words):return set(w for w in words if w in NWORDS)</span><br><span class="line">def correct(word):</span><br><span class="line">    candidates = known([word]) or known(edits1(word)) or known_edits2(word) or [word]</span><br><span class="line">    return max(candidates, key=NWORDS.get)</span><br></pre></td></tr></table></figure>
+<h2 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h2><p>（1）文本库必须有很高的精确性，不能包含拼写错误的词。<br>如果用户输入一个错误的拼法，文本库恰好包含了这种拼法，它就会被当成正确的拼法。<br>（2）对于不包含在文本库中的新词，没有提出解决办法。<br>如果用户输入一个新词，这个词不在文本库之中，就会被当作正确的词。<br>（3）程序返回的是”编辑距离”为1的词，但某些情况下，正确的词的”编辑距离”为2。<br>比如，用户输入reciet，会被纠正为recite（编辑距离为1）,但用户真正想要输入的词是receipt（编辑距离为2）。也就是说，”编辑距离”越短越正确的规则，并非所有情况下都成立。<br>（4）有些常见拼写错误的”编辑距离”大于2。<br>这样的错误，程序无法发现。<br>（5）用户输入的词的拼写正确，但是其实想输入的是另一个词。<br>比如，用户输入是where，这个词拼写正确，程序不会纠正。但是，用户真正想输入的其实是were，不小心多打了一个h。<br>（6）程序返回的是出现频率最高的词，但用户真正想输入的是另一个词。<br>比如，用户输入ther，程序会返回the，因为它的出现频率最高。但是，用户真正想输入的其实是their，少打了一个i。也就是说，出现频率最高的词，不一定就是用户想输入的词。<br>（7）某些词有不同的拼法，程序无法辨别。<br>比如，英国英语和美国英语的拼法不一致。英国用户输入’humur’，应该被纠正为’humour’；美国用户输入’humur’，应该被纠正为’humor’。但是，我们的程序会统一纠正为’humor’。   </p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src>
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title="0" data-url="http://music.163.com/song/media/outer/url?id=504671140.mp3"></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link" data-ae="false" data-ci data-cs data-r data-o data-a data-d="false">查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
